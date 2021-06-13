@@ -1,1 +1,14 @@
-hellow
+<div class="container">
+    <%= form_for @changeset, Routes.service_path(@conn, :add_device), fn f -> %>
+        <div class="form-group">
+            <br>
+            <label>Name:</label>
+            <br>
+            <%= text_input f, :name, class: "form-control" %>
+            <br>
+            <small id="emailHelp", class="form-text text-muted"><%= error_tag f, :name %></small>
+            <br>
+            <%= submit "Submit", class: "btn btn-primary" %>
+        </div>
+    <% end %>
+</div>

@@ -15,7 +15,8 @@ defmodule HouseholdWeb.Router do
 
   scope "/", HouseholdWeb do
     pipe_through :browser
-    get "new-device", ServiceController, :new_device
+    get "/new-device", ServiceController, :new_device
+    post "/add-device", ServiceController, :add_device
   end
 
   # Other scopes may use custom stacks.
