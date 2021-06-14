@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container rtl">
     <%= form_for @changeset, Routes.service_path(@conn, :add_device), fn f -> %>
         <div class="form-group">
             <br>

@@ -10,6 +10,14 @@
   </head>
   <body>
     <main role="main" class="container">
+      <br>
+      <br>
+      <%= if get_flash(@conn, :success) != nil do %>
+         <div class="alert alert-success rtl" role="alert"><%= get_flash(@conn, :success) %></div>
+      <% end %>
+      <%= if get_flash(@conn, :danger) != nil do %>
+         <div class="alert alert-danger rtl" role="alert"><%= get_flash(@conn, :danger) %></div>
+      <% end %>
      <%= @inner_content %>
     </main>
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>

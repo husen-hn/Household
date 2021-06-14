@@ -1,0 +1,14 @@
+<div class="container rtl">
+    <%= for item <- @devices do %>
+        <br>
+        <%= item.name %>
+        <br>
+        <%= item.inserted_at %>
+        <br>
+        <%= item.updated_at %>
+        <br>
+
+
+        --------------------------------
+    <% end %>
+</div>
