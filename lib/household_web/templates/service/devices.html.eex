@@ -1,14 +1,32 @@
-<div class="container rtl">
-    <%= for item <- @devices do %>
-        <br>
-        <%= item.name %>
-        <br>
-        <%= item.inserted_at %>
-        <br>
-        <%= item.updated_at %>
-        <br>
-
-
-        --------------------------------
-    <% end %>
+<div class="alert alert-success  rtl" role="alert">
+    <h4 class="alert-heading">مدیریت دستگاه ها</h4>
+    <p>در این بخش می توانید دستگاه هایی که دریافت می کنید را ایجاد  نمایید تا در بخش فاکتور از آن استفاده نمایید.</p>
+    <hr>
+    <p class="mb-0">برای ایجاد یک دستگاه روی دکمه ایجاد کلیک کنید.</p>
 </div>
+<table class="table rtl">
+    <thead>
+        <tr>
+            <th scope="col">نام دستگاه</th>
+            <th scope="col">ساخت</th>
+            <th scope="col">به روز رسانی</th>
+            <th scope="col">عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+    <%= for item <- @devices do %>
+        <tr class="table-active">
+            <th scope="row">Acitve</th>
+            <th>Cell</th>
+            <th>Cell</th>
+            <th>حذف</th>
+        </tr>
+        <tr>
+            <th scope="row">Default</th>
+            <th>Cell</th>
+            <th>Cell</th>
+            <th>حذف</th>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
