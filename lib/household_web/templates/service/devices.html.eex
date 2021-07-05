@@ -25,7 +25,10 @@
         <% else %>
             <tr class="table-active">
         <% end %>
-            <td><%= item.name %></td>
+            <td>
+            <a href="<%= Routes.service_path(@conn, :edit_device, item.id) %>"><%= item.name %></a>
+            </td>
+
             <td><%= item.inserted_at %></td>
             <td><%= item.updated_at %></td>
             <td>

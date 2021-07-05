@@ -2,7 +2,7 @@ defmodule Household.HtmlApi.Device.DeviceQuery do
   import Ecto.Query
   alias Household.HtmlApi.Device.DeviceSchema
   alias Household.Repo
-
+  # CRUD
   def get_device_with_id(id) do
     Repo.get!(DeviceSchema, id)
   end
@@ -29,5 +29,15 @@ defmodule Household.HtmlApi.Device.DeviceQuery do
       updated_at: u.updated_at
     }
     Repo.all(query)
+  end
+
+  def update_device(device, attrs) do
+    DeviceSchema.changeset(device, attrs)
+    |> Repo.update
+  end
+
+  def edit_device(id, new_device) do
+    get_device_with_id(id)
+    |> update_device(new_device)
   end
 end
