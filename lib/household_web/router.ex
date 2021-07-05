@@ -18,6 +18,7 @@ defmodule HouseholdWeb.Router do
     get "/devices", ServiceController, :devices
     get "/new-device", ServiceController, :new_device
     post "/add-device", ServiceController, :add_device
+    delete "/delete-device/:id", ServiceController, :delete_device
   end
 
   # Other scopes may use custom stacks.

@@ -14,16 +14,28 @@ defmodule HouseholdWeb.ServiceController do
 
   def add_device(conn, %{"device_schema" => device}) do
     case DeviceQuery.add_device(device) do
-      {:ok, device_info} ->
+      {:ok, _device_info} ->
         conn
         |> put_flash(:success, "ذخیره شما با موفقیت انجام گردید.")
-        |> redirect(to: "/new-device")
+        |> redirect(to: "#{HouseholdWeb.Router.Helpers.service_path(conn, :devices)}")
       {:error, changeset} ->
         conn
         |> put_flash(:danger, "مشکلی در فرم شما وجود دارد.")
         render(conn, "new_device.html", changeset: changeset)
     end
+  end
 
-
+  def delete_device(conn, %{"id" => id}) do
+    with {:ok, device_id} <- Ecto.UUID.cast(id),
+      {:ok, _device_info} <- DeviceQuery.delete_device(device_id) do
+        conn
+        |> put_flash(:success, "دستگاه مورد نظر شما حذف گردید.")
+        |> redirect(to: "/devices")
+    else
+      _ ->
+        conn
+        |> put_flash(:danger, "مشکلی در حذف اتفاق افتاده است.")
+        |> redirect(to: "/devices")
+    end
   end
 end

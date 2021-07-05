@@ -1,6 +1,11 @@
 <div class="alert alert-success  rtl" role="alert">
     <h4 class="alert-heading">مدیریت دستگاه ها</h4>
     <p>در این بخش می توانید دستگاه هایی که دریافت می کنید را ایجاد  نمایید تا در بخش فاکتور از آن استفاده نمایید.</p>
+    <a href="<%= Routes.service_path(@conn, :new_device) %>" class="float-left">
+        <button type="button" class="btn btn-outline-success">ساخت دستگاه</button>
+    </a>
+    <br>
+    <br>
     <hr>
     <p class="mb-0">برای ایجاد یک دستگاه روی دکمه ایجاد کلیک کنید.</p>
 </div>
@@ -14,19 +19,20 @@
         </tr>
     </thead>
     <tbody>
-    <%= for item <- @devices do %>
-        <tr class="table-active">
-            <th scope="row">Acitve</th>
-            <th>Cell</th>
-            <th>Cell</th>
-            <th>حذف</th>
+    <%= for {item, color} <- Enum.zip(@devices, Stream.cycle(["active", "unactive"])) do %>
+        <%= if color != "active" do %>
+            <tr>
+        <% else %>
+            <tr class="table-active">
+        <% end %>
+            <td><%= item.name %></td>
+            <td><%= item.inserted_at %></td>
+            <td><%= item.updated_at %></td>
+            <td>
+            <%= link "حذف", to: Routes.service_path(@conn, :delete_device, item.id), method: :delete, data: [confirm: "آیا مطمعن هستید؟"] %>
+            </td>
         </tr>
-        <tr>
-            <th scope="row">Default</th>
-            <th>Cell</th>
-            <th>Cell</th>
-            <th>حذف</th>
-        </tr>
+
     <% end %>
     </tbody>
 </table>
