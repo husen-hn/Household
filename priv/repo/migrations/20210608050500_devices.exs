@@ -8,5 +8,10 @@ defmodule Household.Repo.Migrations.Devices do
       add :name, :string, null: false
       timestamps()
     end
+    create table(:brands, primary_key: false) do
+      add :id, :uuid, primary_key: false
+      add :name, :string, null: false
+      timestamps()
+    end
   end
 end

@@ -3,6 +3,7 @@ defmodule Household.HtmlApi.Device.DeviceQuery do
   alias Household.HtmlApi.Device.DeviceSchema
   alias Household.Repo
   # CRUD
+  # Device
   def get_device_with_id(id) do
     Repo.get!(DeviceSchema, id)
   end

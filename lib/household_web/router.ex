@@ -21,6 +21,13 @@ defmodule HouseholdWeb.Router do
     delete "/delete-device/:id", ServiceController, :delete_device
     get "/edit-device/:id", ServiceController, :edit_device
     put "/update-device", ServiceController, :update_device
+
+    get "/brands", ServiceController, :brands
+    get "/new-brand", ServiceController, :new_brand
+    post "/add-brand", ServiceController, :add_brand
+    delete "/delete-brand/:id", ServiceController, :delete_brand
+    get "/edit-brand/:id", ServiceController, :edit_brand
+    put "/update-brand", ServiceController, :update_brand
   end
 
   # Other scopes may use custom stacks.

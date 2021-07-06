@@ -3,6 +3,10 @@ defmodule HouseholdWeb.ServiceController do
   alias Household.HtmlApi.Device.DeviceSchema
   alias Household.HtmlApi.Device.DeviceQuery
 
+  alias Household.HtmlApi.Device.BrandSchema
+  alias Household.HtmlApi.Device.BrandQuery
+
+  # Device
   def devices(conn, _params) do
     render(conn, "devices.html", devices: DeviceQuery.devices())
   end
@@ -61,6 +65,69 @@ defmodule HouseholdWeb.ServiceController do
         conn
         |> put_flash(:danger, "مشکلی در فرم شما وجود دارد.")
         render(conn, "edit_device.html", changeset: changeset)
+    end
+  end
+
+  # Brand
+
+  def brands(conn, _params) do
+    render(conn, "brands.html", brands: BrandQuery.brands())
+  end
+
+  def new_brand(conn, _params) do
+    changeset = DeviceSchema.changeset(%BrandSchema{})
+    render(conn, "new_brand.html", changeset: changeset)
+  end
+
+  def add_brand(conn, %{"brand_schema" => brand}) do
+    case BrandQuery.add_brand(brand) do
+      {:ok, _device_info} ->
+        conn
+        |> put_flash(:success, "ذخیره شما با موفقیت انجام گردید.")
+        |> redirect(to: "#{HouseholdWeb.Router.Helpers.service_path(conn, :brands)}")
+      {:error, changeset} ->
+        conn
+        |> put_flash(:danger, "مشکلی در فرم شما وجود دارد.")
+        render(conn, "new_brand.html", changeset: changeset)
+    end
+  end
+
+  def delete_brand(conn, %{"id" => id}) do
+    with {:ok, brand_id} <- Ecto.UUID.cast(id),
+      {:ok, _device_info} <- BrandQuery.delete_brand(brand_id) do
+        conn
+        |> put_flash(:success, "دستگاه مورد نظر شما حذف گردید.")
+        |> redirect(to: "#{HouseholdWeb.Router.Helpers.service_path(conn, :brands)}")
+    else
+      _ ->
+        conn
+        |> put_flash(:danger, "مشکلی در حذف اتفاق افتاده است.")
+        |> redirect(to: "#{HouseholdWeb.Router.Helpers.service_path(conn, :brands)}")
+    end
+  end
+
+  def edit_brand(conn, %{"id" => id}) do
+    case BrandQuery.get_brand_with_id(id) do
+       nil ->
+        conn
+        |> put_flash(:success, "چنین صفحه ای وجود ندارد.")
+        |> redirect(to: "#{HouseholdWeb.Router.Helpers.service_path(conn, :brands)}")
+       brand_info ->
+        changeset = BrandSchema.changeset(brand_info)
+        render(conn, "edit_brand.html", changeset: changeset)
+    end
+  end
+
+  def update_brand(conn, %{"brand_schema" => brand}) do
+    case BrandQuery.edit_brand(brand["id"], brand) do
+      {:ok, _brand_info} ->
+        conn
+        |> put_flash(:success, "دستگاه مورد نظر بروز رسانی شد.")
+        |> redirect(to: "#{HouseholdWeb.Router.Helpers.service_path(conn, :brands)}")
+      {:error, changeset} ->
+        conn
+        |> put_flash(:danger, "مشکلی در فرم شما وجود دارد.")
+        render(conn, "edit_brand.html", changeset: changeset)
     end
   end
 end

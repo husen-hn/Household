@@ -12,14 +12,39 @@
     <main role="main" class="container">
       <br>
       <br>
+      <div class="container rtl">
       <%= if get_flash(@conn, :success) != nil do %>
          <div class="alert alert-success rtl" role="alert"><%= get_flash(@conn, :success) %></div>
       <% end %>
       <%= if get_flash(@conn, :danger) != nil do %>
          <div class="alert alert-danger rtl" role="alert"><%= get_flash(@conn, :danger) %></div>
       <% end %>
-     <%= @inner_content %>
+
+      <!-- menu -->
+      <%# Routes.dashboard_path(@conn, :dashboard) %>
+      <a href="#">
+        <button type="button" class="btn btn-outline-info" >داشبورد</button>
+      </a>
+      <%# Routes.service_path(@conn, :brands) %>
+      <a href="<%= Routes.service_path(@conn, :brands) %>">
+        <button type="button" class="btn btn-outline-primary" >مدیریت برند</button>
+      </a>
+      <a href="<%= Routes.service_path(@conn, :devices) %>">
+        <button type="button" class="btn btn-outline-secondary" >مدیریت دستگاه</button>
+      </a>
+      <a href="#">
+        <button type="button" class="btn btn-outline-danger" >پیش فاکیتور</button>
+      </a>
+      <br>
+      <br>
+      </div>
+     <%= render @view_module, @view_template, assigns %>
     </main>
+    <br>
+    <br>
+    <footer class="container rtl">
+      <p class="cright">copy rights 2021</p>
+    </footer>
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
