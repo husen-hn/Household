@@ -13,7 +13,11 @@ defmodule Household.HtmlApi.Device.BrandSchema do
   def changeset(brand, params \\ %{}) do
     brand
     |> cast(params, [:name])
-    |> validate_required([:name], message: "تمامی فیلدهای موردنظر باید وارد شود." )
+    |> validate_required([:name], message: "تمامی فیلدهای موردنظر باید وارد شود.")
     |> validate_length(:name, max: 150, message: "حداکثر مجاز ۱۵۰ کاراکتر می باشد.")
+    |> unique_constraint(:name,
+      name: :unique_index_on_brands_name,
+      message: "تیتر دستگاه تکراری می باشد."
+    )
   end
 end

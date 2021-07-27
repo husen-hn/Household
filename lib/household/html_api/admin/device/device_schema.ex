@@ -7,13 +7,22 @@ defmodule Household.HtmlApi.Device.DeviceSchema do
 
   schema "devices" do
     field :name, :string, size: 150, null: false
+
+    has_many :invoices, Household.HtmlApi.Device.InvoicesSchema,
+      foreign_key: :device_id,
+      on_delete: :nothing
+
     timestamps()
   end
 
   def changeset(device, params \\ %{}) do
     device
     |> cast(params, [:name])
-    |> validate_required([:name], message: "تمامی فیلدهای موردنظر باید وارد شود." )
+    |> validate_required([:name], message: "تمامی فیلدهای موردنظر باید وارد شود.")
     |> validate_length(:name, max: 150, message: "حداکثر مجاز ۱۵۰ کاراکتر می باشد.")
+    |> unique_constraint(:name,
+      name: :unique_index_on_devices_name,
+      message: "تیتر دستگاه تکراری می باشد."
+    )
   end
 end
